@@ -24,18 +24,6 @@
                           
                     </div>
               
-                    <div class="form-outline flex-fill">
-                      <label class="float-start form-label" for="form3">Description</label>
-                        <textarea
-                          rows="4" 
-                          type="text"
-                          v-model="description"
-                          placeholder="Enter Task's Description"
-                          class="w-100 form-control"
-                          @keyup.enter="submitTask"
-                          required/>
-                          
-                    </div>
                       <button 
                         type="submit"  
                         class=" float-end btn btn-primary btn-lg ms-2">{{ editedTask !== undefined ? "Update": "Add" }} Task</button>
@@ -99,9 +87,7 @@
 import {ref , onMounted} from 'vue';
 
 const title = ref("");
-const description = ref("");
 const titleError = ref(false);
-const descriptionError = ref(false);
 const editedTask = ref(undefined);
 const statuses = ref(["to-do", "finished"]);
 const tasks = ref([]);
@@ -139,7 +125,6 @@ const deleteTask = (index) => {
  */
 const editTask = (index) => {
   title.value = tasks.value[index].title;
-  description.value = tasks.value[index].description;
   editedTask.value = index;
 }
 
@@ -153,28 +138,18 @@ const submitTask = () => {
   }
 
   titleError.value = false;
-
-  if (description.value.length === 0) {
-    descriptionError.value = true;
-    return;
-  }
-
-  descriptionError.value = false;
   /* update the task */
   if (editedTask.value != undefined) {
     tasks.value[editedTask.value].title = title.value;
-    tasks.value[editedTask.value].description = description.value;
     editedTask.value = undefined;
   } else {
     /* add new task */
     tasks.value.push({
       title: title.value,
       status: "to-do",
-      description: description.value
     });
   }
   title.value = "";
-  description.value = "";
 }
 
 onMounted(() => {
