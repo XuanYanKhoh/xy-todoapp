@@ -159,7 +159,7 @@ const submitTask = () => {
     return;
   }
 
-  titleError.value = false;
+  descriptionError.value = false;
   /* update the task */
   if (editedTask.value != undefined) {
     tasks.value[editedTask.value].title = title.value;
